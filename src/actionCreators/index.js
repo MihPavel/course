@@ -76,21 +76,23 @@ export function loadArticle(id){
       }))
   }
 }
-export function loadComments(idArticle){
+export function loadComments(id){
   return (dispatch) => {
     dispatch({
       type: LOAD_COMMENTS + START,
-      payload: {idArticle}
+      payload: {id}
     });
-    fetch(`/api/comment?article=${idArticle}`)
+    fetch(`/api/comment?article=${id}`)
       .then(res => res.json())
-      .then(response => dispatch({
-        type: LOAD_COMMENTS + SUCCESS,
-        payload: {idArticle, response}
-      }))
+      .then(response => {
+        dispatch({
+          type: LOAD_COMMENTS + SUCCESS,
+          payload: {id, response}
+        })
+    })
       .catch(error => dispatch({
         type: LOAD_COMMENTS + FAIL,
-        payload: {idArticle, error}
+        payload: {id, error}
       }));
   }
 }

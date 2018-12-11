@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import ToggleOpen from '../decorators/toggleOpen'
 import {connect} from 'react-redux';
 import {deleteArticle, loadArticle} from '../actionCreators';
-import Loader from './Loader';
 
 class Article extends Component{
 	static propTypes = {
@@ -22,8 +21,6 @@ class Article extends Component{
 	getBody(){
 		const {article, isOpen} = this.props;
 		if(!isOpen) return null;
-		if(article.loading) return <Loader/>
-		console.log("article getBody",article.text);
 		return (
 			<section>
 				{article.text}

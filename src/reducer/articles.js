@@ -1,5 +1,5 @@
 import { normalizedArticles as defaultArticles } from '../fixtures';
-import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE, START, SUCCESS} from '../constants';
+import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE, START, SUCCESS,LOAD_COMMENTS} from '../constants';
 import {arrToMap} from '../lib';
 import {OrderedMap, Record} from 'immutable';
 
@@ -7,6 +7,8 @@ const ArticleRecord = Record({
   text: undefined,
   title: '',
   id: undefined,
+  loadingComments: false,
+  loadedComments: false,
   loading: false,
   comments: []
 });
@@ -22,7 +24,7 @@ const defaultState = new ReducerState();
 // нужен инструмент по работе с асинхронностью и контролем уровней вложенности
 // удобство работы с имутабельными данными
 export default (articlesState = defaultState, action) => {
-  const {type, payload, randomId, response} = action;
+  const {type, payload, randomId, response, idArticle} = action;
   switch(type){
     case DELETE_ARTICLE: 
       return articlesState.deleteIn(['entities', payload.id]);
@@ -39,13 +41,20 @@ export default (articlesState = defaultState, action) => {
       return articlesState
         .set('entities', arrToMap(response, ArticleRecord))
         .set('loading', false)
-        .set('loaded', true)
+        .set('loaded', true);
     
     case LOAD_ARTICLE + START:
         return articlesState.setIn(['entities', payload.id, 'loading'], true);
 
     case LOAD_ARTICLE + SUCCESS:
         return articlesState.setIn(['entities', payload.id], new ArticleRecord(payload.response));
+
+    case LOAD_COMMENTS + START: 
+        return articlesState.setIn(['entities', payload.id, 'loadingComments'], true);
+    case LOAD_COMMENTS + SUCCESS:
+        return articlesState
+          .setIn(['entities', payload.id, 'loadedComments'], true)
+          .setIn(['entities', payload.id, 'loadingComments'], false);
   } 
   return articlesState;
 }

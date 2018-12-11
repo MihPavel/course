@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {commentSelectorFactory} from '../selectors';
+
 function Comment({comment}){
+	console.log(comment);
 	return (
 		<div>
 			<div>Пользователь {comment.user}</div>
@@ -14,7 +16,6 @@ function Comment({comment}){
 const mapStateToProps = () => {
 	const commentSelector = commentSelectorFactory();
 	return (state, ownProps) => {
-		console.log(state);
 		return commentSelector(state, ownProps);
 	}
 }

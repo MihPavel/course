@@ -5,15 +5,18 @@ import ToggleOpen from '../decorators/toggleOpen'
 import CommentForm from './CommentForm'
 import {connect} from 'react-redux';
 import {loadComments} from '../actionCreators';
+import Loader from './Loader';
 
 class CommentList extends Component{
-	componentWillReceiveProps({isOpen, loadComments, article, loading, loaded}){
-		if(isOpen && !loading) loadComments(article.id);
+	componentWillReceiveProps({isOpen, loadComments, article}){
+		if(isOpen && !article.loadingComments && !article.loadedComments) loadComments(article.id);
 	}
 	getBody(){
 		const {isOpen, article} = this.props;
 		
 		if(!isOpen) return null;
+		if(article.loadingComments) return <Loader/>;
+		if(!article.loadedComments) return null;
 		const commentList = article.comments.map( (id) => <li key={id}><Comment id={id} /></li>);
 		return (
 			<div>
@@ -32,11 +35,5 @@ class CommentList extends Component{
 		)
 	}
 }
-export default connect((state)=>{
-	return {
-		loading: state.comments.loading,
-		loaded: state.comments.loaded
-	}
-}, {loadComments})( ToggleOpen(CommentList) );
+export default connect(null, {loadComments})( ToggleOpen(CommentList) );
 
-//loadComments

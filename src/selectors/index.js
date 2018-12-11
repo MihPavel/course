@@ -23,8 +23,9 @@ const commentsGetter = state => state.comments;
 const idGetter = (state, props) => props.id;
 
 export const commentSelectorFactory = () => createSelector(commentsGetter, idGetter, (comments, id) => {
+  console.log("reduser comments",comments);
   return { 
-    comment: mapToArr(comments.id)
+    comment: comments.get(id)
   };
 })
 /////////////////////////////////////////
