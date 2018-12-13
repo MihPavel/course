@@ -11,22 +11,18 @@ export const filtredArticlesSelector = createSelector(articlesGetter, filtersGet
   let from = Date.parse(dataRange.from);
   let to = Date.parse(dataRange.to);
 
-  console.log("selectors filtredArticlesSelector", articles);
-
   return mapToArr(articles).filter(article => {
     let artDate = Date.parse(article.date);
     return  (!selected.length && !from && !to) || (selected.includes(article.id) && (artDate >= from && artDate <= to)) 
   });
 });
 
-const commentsGetter = state => state.comments;
+const commentsGetter = state => state.entities.comments;
 const idGetter = (state, props) => props.id;
 
 export const commentSelectorFactory = () => createSelector(commentsGetter, idGetter, (comments, id) => {
-  console.log("reduser comments",comments);
-  return { 
-    comment: comments.get(id)
-  };
+  console.log("reduser comments", comments);
+  return comments.get(id);
 })
 /////////////////////////////////////////
 //const articlesMap = defaultArticles.reduce((acc, article) => {

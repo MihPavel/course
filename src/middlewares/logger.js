@@ -5,8 +5,8 @@
 // потом возвращает функцию которая принимает action  и там что то происходит
 // все что может сделать редьюссеры и экшен криейтер не чистыми
 export default store => next => action => {
-    console.log("---", 'state before', store.getState());
-    console.log("---", 'dispatching', action);
+    //console.log("---", 'state before', store.getState());
+    //console.log("---", 'dispatching', action);
     next(action); // задача передать наш экшен в редьюссеры
-    console.log("---", 'state after', store.getState());
+    //console.log("---", 'state after', store.getState());
 }

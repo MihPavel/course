@@ -49,7 +49,6 @@ export function addComment(comment, articleId){
 }
 
 export function loadAllArticles(){
-  console.log("AC loadAllArticles");
   return{
     type: LOAD_ALL_ARTICLES,
     callAPI: '/api/article'
@@ -58,7 +57,6 @@ export function loadAllArticles(){
 
 // благодаря редакс thunk можно возвращать не только объекты, но и функции
 export function loadArticle(id){
-  console.log("AC loadArticle", id);
   return (dispatch) => {
     dispatch({
       type: LOAD_ARTICLE + START,
@@ -77,6 +75,7 @@ export function loadArticle(id){
   }
 }
 export function loadComments(id){
+  console.log("AC loadComment", id);
   return (dispatch) => {
     dispatch({
       type: LOAD_COMMENTS + START,
@@ -84,12 +83,10 @@ export function loadComments(id){
     });
     fetch(`/api/comment?article=${id}`)
       .then(res => res.json())
-      .then(response => {
-        dispatch({
+      .then(response => dispatch({
           type: LOAD_COMMENTS + SUCCESS,
           payload: {id, response}
-        })
-    })
+      }))
       .catch(error => dispatch({
         type: LOAD_COMMENTS + FAIL,
         payload: {id, error}

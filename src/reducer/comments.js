@@ -16,15 +16,10 @@ const ReducerState = Record({
 export default (commentsState = ReducerState, action) => {
   const {type, payload, randomId, response} = action;
   switch(type){
-    case ADD_COMMENT: return {
-      ...commentsState,
-      [randomId]: {
-        id: randomId,
-        user: payload.comment.user,
-        text: payload.comment.text
-      }
-    }
+    case ADD_COMMENT: 
+      return commentsState.setIn(['entities', randomId], new CommentRecord({...payload.comment, id: randomId}));
     case LOAD_COMMENTS + SUCCESS:
+      console.log("load comments success");
       return commentsState.update('entities', entities => entities.merge(arrToMap(payload.response, CommentRecord)));
   }
   return commentsState;

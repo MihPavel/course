@@ -10,7 +10,6 @@ export default store => next => action => {
         ...rest, type: type + START
     });
 
-    console.log("midelwar CALL API");
     fetch(callAPI) // 1
         .then(res => res.json()) // 2
         .then(response => next({...rest, type: type + SUCCESS, response})) // 3

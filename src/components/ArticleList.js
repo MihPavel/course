@@ -14,11 +14,9 @@ class ArticleList extends Component{
 	}
 	componentDidMount(){
 		const {loadAllArticles, loading, loaded} = this.props;
-		console.log("list did mount");
 		if(!loaded || !loading) loadAllArticles();
 	}
 	render(){
-		console.log("list render");
 		let {toggleOpen, idOpen, articles, loading} = this.props;
 		if(loading) return <Loader/>
 		const articleElements = articles.map( (article) =>
@@ -34,7 +32,6 @@ class ArticleList extends Component{
 	}
 }
 export default connect((state) => {
-	console.log("list connect", state);
 	return {
 		articles: filtredArticlesSelector(state),
 		loading: state.articles.loading,
