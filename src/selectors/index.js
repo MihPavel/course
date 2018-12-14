@@ -17,15 +17,11 @@ export const filtredArticlesSelector = createSelector(articlesGetter, filtersGet
   });
 });
 
-const commentsGetter = state => state.entities.comments;
+const commentsGetter = state => state.comments.entities;
 const idGetter = (state, props) => props.id;
 
 export const commentSelectorFactory = () => createSelector(commentsGetter, idGetter, (comments, id) => {
-  console.log("reduser comments", comments);
-  return comments.get(id);
+  return {
+    comment: comments.get(id)
+  }
 })
-/////////////////////////////////////////
-//const articlesMap = defaultArticles.reduce((acc, article) => {
-//  acc[article.id] = article;
-//  return acc
-//}, {});

@@ -9,7 +9,9 @@ import Loader from './Loader';
 
 class CommentList extends Component{
 	componentWillReceiveProps({isOpen, loadComments, article}){
-		if(isOpen && !article.loadingComments && !article.loadedComments) loadComments(article.id);
+		if(isOpen && !article.loadingComments && !article.loadedComments){
+			loadComments(article.id);
+		}
 	}
 	getBody(){
 		const {isOpen, article} = this.props;

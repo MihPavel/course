@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {commentSelectorFactory} from '../selectors';
 
 function Comment({comment}){
-	console.log("component comment",comment);
 	return (
 		<div>
 			<div>Пользователь {comment.user}</div>
